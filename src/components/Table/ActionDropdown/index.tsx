@@ -16,7 +16,8 @@ const items: MenuProps['items'] = [
   {
     label: 'Delete',
     key: 'delete',
-  },];
+  }
+];
 
 const ActionDropdown: FC<IActionDropdown> = ({ onEdit, onDelete }) => {
   const handleMenuClick: MenuProps['onClick'] = (e) => {
