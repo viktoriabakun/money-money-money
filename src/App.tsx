@@ -1,10 +1,12 @@
 import './App.css';
+import { Flex } from 'antd';
 
-function App() {
+import Table from './components/Table';
 
-  return (
-    <div />
-  );
-}
+const App = () => (
+  <Flex align="center" justify="center">
+    <Table />
+  </Flex>
+);
 
 export default App;
