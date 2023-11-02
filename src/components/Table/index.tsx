@@ -55,14 +55,13 @@ const Table = () => {
           ...row,
         });
         setTableData(newData);
-        setEditingKey('');
-        setAddingKey('');
       } else {
         newData.push(row);
         setTableData(newData);
-        setEditingKey('');
-        setAddingKey('');
       }
+
+      setEditingKey('');
+      setAddingKey('');
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
     }
