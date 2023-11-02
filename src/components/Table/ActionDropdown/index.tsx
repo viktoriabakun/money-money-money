@@ -1,7 +1,7 @@
 import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown } from 'antd';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 
 interface IActionDropdown {
     onEdit: () => void;
@@ -21,7 +21,7 @@ const items: MenuProps['items'] = [
 ];
 
 const ActionDropdown: FC<IActionDropdown> = ({ onEdit, onDelete }) => {
-  const handleMenuClick: MenuProps['onClick'] = (e) => e.key === 'edit' ? onEdit() : onDelete();
+  const handleMenuClick: MenuProps['onClick'] = useCallback( (e: { key: string }) => e.key === 'edit' ? onEdit() : onDelete(),[onDelete, onEdit]);
 
   const menuProps = {
     items,
