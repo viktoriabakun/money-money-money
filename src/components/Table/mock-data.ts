@@ -1,6 +1,9 @@
+import * as dayjs from 'dayjs';
+import { Dayjs } from 'dayjs';
+
 export interface ITableData {
-    id: string;
-    date: Date | string;
+    key: string;
+    date: Dayjs;
     amount: number;
     type: 'income' | 'expense';
     note: string;
@@ -8,29 +11,29 @@ export interface ITableData {
 
 export const mockTableData: ITableData[] = [
   {
-    id: '1',
-    date: new Date(2023, 9, 5),
+    key: '1',
+    date: dayjs('2023-09-25'),
     amount: 3000,
     type: 'income',
     note: 'Salary',
   },
   {
-    id: '2',
-    date: new Date(2023, 9, 14),
+    key: '2',
+    date: dayjs('2023-09-20'),
     amount: 100,
     type: 'expense',
     note: 'Gift',
   },
   {
-    id: '3',
-    date: new Date(2023, 9, 10),
+    key: '3',
+    date: dayjs('2023-10-25'),
     amount: 1000,
     type: 'expense',
     note: 'Rent',
   },
   {
-    id: '4',
-    date: new Date(2023, 9, 21),
+    key: '4',
+    date: dayjs('2023-09-26'),
     amount: 200,
     type: 'expense',
     note: 'Forest & mountain camping weekend',
