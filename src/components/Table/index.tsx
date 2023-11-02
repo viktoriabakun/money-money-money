@@ -50,8 +50,9 @@ const Table = () => {
   }, [form, setTableData, tableData]);
   
   const handleDelete = useCallback( (key: string)=> {
-    console.log('delete', key);
-  }, []);
+    const newData = [...tableData];
+    setTableData(newData.filter((item) => item.key !== key));
+  }, [setTableData, tableData]);
 
   const columns = useMemo( () =>  [
     {
