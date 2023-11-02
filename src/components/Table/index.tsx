@@ -1,5 +1,6 @@
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Form, Space, Table as AntdTable } from 'antd';
+import { SortOrder } from 'antd/lib/table/interface';
 import dayjs from 'dayjs';
 import { Key, useCallback, useMemo, useState } from 'react';
 
@@ -14,17 +15,33 @@ const Table = () => {
   const [form] = Form.useForm();
   const [tableData, setTableData] = useLocalStorageState('tableData', mockTableData);
   const [editingKey, setEditingKey] = useState('');
-
-  const cancelRowEditing = () =>
-    setEditingKey('');
+  const [addingKey, setAddingKey] = useState('');
 
   const isEditing = useCallback((record: ITableData) => record.key === editingKey, [editingKey]);
+  const isAdding = useCallback((record: ITableData) => record.key === addingKey, [addingKey]);
+  
+  const cancelRowEditing = useCallback( () => setEditingKey(''), []);
+  const cancelRowAdding = useCallback( () => {
+    const newData = [...tableData].filter((item) => item.key !== addingKey);
+    setTableData(newData);
+    setAddingKey('');
+  }, [addingKey, setTableData, tableData]);
 
-  const handleEdit = useCallback((record: Partial<ITableData> & { key: Key })=> {
-    form.setFieldsValue({ date: new Date(), amount: 0, type: 'income', note: '', ...record });
+  const onEdit = useCallback((record: Partial<ITableData> & { key: Key })=> {
+    form.setFieldsValue({ date: dayjs(), amount: 0, type: 'income', note: '', ...record });
     setEditingKey(record.key);
   }, [form]);
 
+  const onAddNew = useCallback(() => {
+    const newKey = Date.now().toString();
+    form.setFieldsValue({ date: dayjs(), amount: 0, type: 'income', note: '' });
+    setTableData([...tableData, { key: newKey, date: dayjs(), amount: 0, type: 'income', note: '' }]);
+    setAddingKey(newKey);
+    setEditingKey(newKey);
+  }, [form, setTableData, tableData]);
+
+  // This function is used for both editing and adding new row
+  // Since adding a new row is just editing of an empty one, we can reuse the same function
   const handleSaveEdit = useCallback( async (key: Key) => {
     try {
       const row = (await form.validateFields()) as ITableData;
@@ -39,10 +56,12 @@ const Table = () => {
         });
         setTableData(newData);
         setEditingKey('');
+        setAddingKey('');
       } else {
         newData.push(row);
         setTableData(newData);
         setEditingKey('');
+        setAddingKey('');
       }
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
@@ -60,8 +79,9 @@ const Table = () => {
       dataIndex: 'date',
       key: 'date',
       editable: true,
+      defaultSortOrder: 'descend' as SortOrder,
       render: (date: Date) => dayjs(date).format('DD/MM/YYYY'),
-      sorter: (a: ITableData, b: ITableData) => new Date(a.date.valueOf()).getTime() - new Date(b.date.valueOf()).getTime()
+      sorter: (a: ITableData, b: ITableData) => a.date.valueOf() - b.date.valueOf()
     },
     {
       title: 'Amount',
@@ -88,17 +108,19 @@ const Table = () => {
       key: 'action',
       render: (_: unknown, record: ITableData) => {
         const editing = isEditing(record);
+        const adding = isAdding(record);
+        const cancelRowAction = adding ? cancelRowAdding : cancelRowEditing;
         return editing ? (
           <Space>
             <Button onClick={() => handleSaveEdit(record.key)} type="primary" shape="circle" icon={<CheckOutlined />} />
-            <Button onClick={cancelRowEditing} type="primary" danger shape="circle" icon={<CloseOutlined />} />
+            <Button onClick={cancelRowAction} type="primary" danger shape="circle" icon={<CloseOutlined />} />
           </Space>
         ) : (
-          <ActionDropdown onEdit={() => handleEdit(record)} onDelete={() => handleDelete(record.key)}/>
+          <ActionDropdown onEdit={() => onEdit(record)} onDelete={() => handleDelete(record.key)}/>
         );
       }
     },
-  ], [handleDelete, handleEdit, handleSaveEdit, isEditing]);
+  ], [isEditing, isAdding, cancelRowAdding, cancelRowEditing, handleSaveEdit, onEdit, handleDelete]);
 
   const mergedColumns = useMemo( () => columns.map((col) => {
     if (!col.editable) {
@@ -126,6 +148,7 @@ const Table = () => {
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
+        defaultSortOrder: col.dataIndex === 'date' ? 'descend' as SortOrder : undefined,
       }),
     };
   }),[columns, isEditing]);
@@ -141,6 +164,8 @@ const Table = () => {
   const summary = useCallback(() => <SummaryFooter totalAmount={totalAmount}/>, [totalAmount]);
 
   return <Form form={form} component={false}>
+    <Button onClick={onAddNew} disabled={Boolean(addingKey)} type="primary">Add new</Button>
+
     <AntdTable
       components={{
         body: {

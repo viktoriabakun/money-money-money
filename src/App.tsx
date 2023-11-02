@@ -4,7 +4,7 @@ import { Flex } from 'antd';
 import Table from './components/Table';
 
 const App = () => (
-  <Flex align="center" justify="center">
+  <Flex align="flex-start" vertical gap={20}>
     <Table />
   </Flex>
 );
