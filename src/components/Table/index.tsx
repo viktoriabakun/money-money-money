@@ -1,5 +1,5 @@
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Form, Space, Table as AntdTable } from 'antd';
+import { Button, Form, Space, Table as AntdTable, Typography } from 'antd';
 import { SortOrder } from 'antd/lib/table/interface';
 import dayjs from 'dayjs';
 import { Key, useCallback, useMemo, useState } from 'react';
@@ -9,9 +9,27 @@ import useLocalStorageState from '../../hooks/useLocalStorage.tsx';
 import ActionDropdown from './ActionDropdown';
 import { EditableCell } from './EditableCell';
 import { currency, ITableData, mockTableData } from './mock-data.ts';
-import SummaryFooter from './SummaryFooter';
 
 import './style.css';
+
+/**
+ * This function is used to render the summary row at the bottom of the table
+ * To make the 'fixed' prop work, the antd Summary should not have a wrapper
+ */
+const getSummary = (totalAmount: number) => <AntdTable.Summary fixed="bottom">
+  <AntdTable.Summary.Row>
+
+    <AntdTable.Summary.Cell index={0} colSpan={4}>
+      <Typography.Text strong>Total</Typography.Text>
+    </AntdTable.Summary.Cell>
+
+    <AntdTable.Summary.Cell index={1}>
+      <Typography.Text strong>
+        {`${totalAmount}${currency}`}
+      </Typography.Text>
+    </AntdTable.Summary.Cell>
+  </AntdTable.Summary.Row>
+</AntdTable.Summary>;
 
 const Table = () => {
   const [form] = Form.useForm();
@@ -77,6 +95,8 @@ const Table = () => {
   const columns = useMemo( () =>  [
     {
       title: 'Date',
+      width: '20%',
+      fixed: 'left' as const,
       dataIndex: 'date',
       key: 'date',
       editable: true,
@@ -86,6 +106,7 @@ const Table = () => {
     },
     {
       title: 'Amount',
+      width: '15%',
       dataIndex: 'amount',
       key: 'amount',
       editable: true,
@@ -94,18 +115,21 @@ const Table = () => {
     },
     {
       title: 'Type',
+      width: '20%',
       dataIndex: 'type',
       key: 'type',
       editable: true,
     },
     {
       title: 'Note',
+      width: '35%',
       dataIndex: 'note',
       key: 'note',
       editable: true,
     },
     {
       title: 'Action',
+      width: '10%',
       key: 'action',
       render: (_: unknown, record: ITableData) => {
         const editing = isEditing(record);
@@ -161,24 +185,23 @@ const Table = () => {
     return acc + amount;
   }, 0),
   [tableData]);
-
-  const summary = useCallback(() => <SummaryFooter totalAmount={totalAmount}/>, [totalAmount]);
-
+  
   return <Form form={form} component={false}>
     <Button onClick={onAddNew} disabled={Boolean(addingKey)} type="primary">Add new</Button>
 
     <AntdTable
       className="table-container"
+      dataSource={tableData}
+      columns={mergedColumns}
       components={{
         body: {
           cell: EditableCell,
         },
       }}
-      bordered
+      summary={() => getSummary(totalAmount)}
       rowKey="key"
-      columns={mergedColumns}
-      dataSource={tableData}
-      summary={summary}
+      bordered
+      scroll={{ x: true, y: '60vh' }}
       pagination={{ position: ['none', 'none'] }}
     />
   </Form>;
