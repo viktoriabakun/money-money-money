@@ -1,6 +1,36 @@
 # Test Task for a Frontend Developer
 
-### A table for accounting expenses and income
+A simple expense and income tracker built using React and Ant Design.
+
+## Features
+
+📅 **Create, Edit, and Delete Transactions**
+- Easily manage your expenses and income.
+- Edit and delete transactions with a few clicks.
+
+💰 **Income and Expense Tracking**
+- Keep track of your financial transactions with income and expense categories.
+
+📊 **Total Calculation**
+- The table footer shows the difference between all income and expenses.
+
+## Demo Screenshot
+
+![demo-screenshot.png](..%2F..%2FDesktop%2Fdemo-screenshot.png)
+
+## Try it live!
+
+Deployed version is available [here](https://main--money-must-be-funny.netlify.app/)
+
+Enjoy tracking your finances with "Money Must Be Funny"! 💸
+
+## Getting Started
+
+1. Clone the repository.
+2. Install dependencies using `pnpm install`.
+3. Run the app with `pnpm run dev`.
+
+## Task Acceptance Criteria
 
 **Preconditions:**
 
