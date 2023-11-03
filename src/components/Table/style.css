@@ -1,0 +1,5 @@
+.table-container {
+    -webkit-box-shadow: 11px 11px 27px -12px rgba(87, 74, 154, 1);
+    -moz-box-shadow: 11px 11px 27px -12px rgba(87, 74, 154, 1);
+    box-shadow: 11px 11px 27px -12px rgba(87, 74, 154, 1);
+}
