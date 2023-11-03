@@ -11,6 +11,8 @@ import { EditableCell } from './EditableCell';
 import { currency, ITableData, mockTableData } from './mock-data.ts';
 import SummaryFooter from './SummaryFooter';
 
+import './style.css';
+
 const Table = () => {
   const [form] = Form.useForm();
   const [tableData, setTableData] = useLocalStorageState('tableData', mockTableData);
@@ -166,6 +168,7 @@ const Table = () => {
     <Button onClick={onAddNew} disabled={Boolean(addingKey)} type="primary">Add new</Button>
 
     <AntdTable
+      className="table-container"
       components={{
         body: {
           cell: EditableCell,
@@ -178,8 +181,7 @@ const Table = () => {
       summary={summary}
       pagination={{ position: ['none', 'none'] }}
     />
-  </Form>
-  ;
+  </Form>;
 };
 
 export default Table;

@@ -3,6 +3,8 @@ import { FC, HTMLAttributes, ReactNode, useCallback } from 'react';
 
 import { ITableData } from '../mock-data.ts';
 
+import './style.css';
+
 const selectOptions = [
   { value: 'expense', label: 'expense' },
   { value: 'income', label: 'income' },
@@ -67,6 +69,7 @@ export const EditableCell: FC<IEditableCell> = ({
     <td {...restProps}>
       {editing ? (
         <Form.Item
+          className="editable-cell"
           name={dataIndex}
           rules={generalValidationRules()}
         >
