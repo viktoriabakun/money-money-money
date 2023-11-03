@@ -12,32 +12,39 @@ export interface ITableData {
 export const mockTableData: ITableData[] = [
   {
     key: '1',
-    date: dayjs('2023-09-25'),
-    amount: 3000,
+    date: dayjs('2023-09-15'),
+    amount: 500,
     type: 'income',
     note: 'Salary',
   },
   {
     key: '2',
     date: dayjs('2023-09-20'),
-    amount: 100,
-    type: 'expense',
-    note: 'Gift',
-  },
-  {
-    key: '3',
-    date: dayjs('2023-10-25'),
-    amount: 1000,
+    amount: 250,
     type: 'expense',
     note: 'Rent',
   },
   {
-    key: '4',
-    date: dayjs('2023-09-26'),
-    amount: 200,
+    key: '3',
+    date: dayjs('2023-10-01'),
+    amount: 10,
     type: 'expense',
-    note: 'Forest & mountain camping weekend',
-  }
+    note: '42kg of potatoes',
+  },
+  {
+    key: '4',
+    date: dayjs('2023-10-02'),
+    amount: 5,
+    type: 'expense',
+    note: 'Grater for potatoes',
+  },
+  {
+    key: '5',
+    date: dayjs('2023-10-03'),
+    amount: 1,
+    type: 'expense',
+    note: 'Sour cream for draniki',
+  },
 ];
 
 export const currency = '$';
