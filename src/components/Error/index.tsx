@@ -1,7 +1,7 @@
 import { Button, Flex } from 'antd';
 import { useCallback } from 'react';
 
-const ErrorPage = () => {
+const PageError = () => {
   const onReload = useCallback( () => window.location.reload(), []);
     
   return (
@@ -17,4 +17,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default PageError;

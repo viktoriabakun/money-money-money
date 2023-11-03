@@ -10,13 +10,13 @@ const selectOptions = [
   { value: 'income', label: 'income' },
 ];
 interface IEditableCell extends HTMLAttributes<HTMLElement> {
-    editing: boolean;
-    dataIndex: string;
-    title: string;
-    inputType: 'number' | 'text' | 'date' | 'select';
-    record: ITableData;
-    index: number;
-    children: ReactNode;
+  editing: boolean;
+  dataIndex: string;
+  title: string;
+  inputType: 'number' | 'text' | 'date' | 'select';
+  record: ITableData;
+  index: number;
+  children: ReactNode;
 }
 
 export const EditableCell: FC<IEditableCell> = ({

@@ -21,7 +21,7 @@ module.exports = {
     }],
     "react/prop-types": "off",
     'quotes': [2, 'single', 'avoid-escape'],
-    'no-multiple-empty-lines': ['warn', {max: 1}],
+    'no-multiple-empty-lines': ['error', {max: 1}],
     'import/no-unresolved': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/function-component-definition': 'off',
