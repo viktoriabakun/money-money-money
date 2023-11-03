@@ -173,7 +173,6 @@ const Table = () => {
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
-        defaultSortOrder: col.dataIndex === 'date' ? 'descend' as SortOrder : undefined,
       }),
     };
   }),[columns, isEditing]);
