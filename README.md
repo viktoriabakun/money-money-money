@@ -16,7 +16,7 @@ A simple expense and income tracker built using React and Ant Design.
 
 ## Demo Screenshot
 
-![demo-screenshot.png](../media/images/demo-screenshot.png?raw=true)
+![demo-screenshot.png](https://github.com/viktoriabakun/money-money-money/blob/media/images/demo-screenshot.png)
 
 ## Try it live!
 
